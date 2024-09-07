@@ -11,13 +11,12 @@ if (empty($title) || empty($email) || empty($content)) {
           <p>送信画面へ</p>
         </a>
       ';
-}
-
-if (empty($title) && empty($email) && empty($content)) {
+} else {
+    // データベース操作
     $dbUserName = 'root';
     $dbPassword = 'password';
     $pdo = new PDO(
-        'mysql:dbname=tqcontactform;host=mysql;charset=utf8',
+        'mysql:dbname=contactform;host=mysql;charset=utf8',
         $dbUserName,
         $dbPassword
     );
@@ -29,16 +28,17 @@ if (empty($title) && empty($email) && empty($content)) {
     $statement->bindValue(':email', $email, PDO::PARAM_STR);
     $statement->bindValue(':content', $content, PDO::PARAM_STR);
     $statement->execute();
+
+    $message = '送信完了！！！';
+    $link = '
+      <a href="./index.php">
+        <p>送信画面へ</p>
+      </a>
+      <a href="./history.php">
+        <p>送信履歴をみる</p>
+      </a>
+    ';
 }
-$message = '送信完了！！！';
-$link = '
-  <a href="./index.php">
-    <p>送信画面へ</p>
-  </a>
-  <a href="./history.php">
-    <p>送信履歴をみる</p>
-  </a>
-';
 ?>
 
 <body>
